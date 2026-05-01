@@ -1,35 +1,11 @@
-#include "FreeRTOSConfig.h"
-#include "FreeRTOSTasks.h"
-#include "mcu.h"
+#include "flash.h"
+#include "rcc.h"
 
-
-static void Startup( void *arg );
-// static void StartupTask( void *param );
+#define WAITE_STATE (0x00U)
 
 int main()
 {
-	SystemCoreClockUpdate();
+	FLASH_ConfigWaitState(WAITE_STATE);
 
-	Startup(NULL);
-
-	vTaskStartScheduler();
-
-	while (1)
-	{
-
-	}
-	
+	RCC_Init();
 }
-
-static void Startup( void *arg )
-{
-	configASSERT(pdPASS == xTaskCreate(Startup, "Task1", STARTUP_STACK_SIZE, NULL, STARTUP_STACK_PRIORITY, NULL));
-
-
-}
-
-// static void StartupTask( void *param )
-// {
-// 	vTaskDelete(NULL);
-
-// }

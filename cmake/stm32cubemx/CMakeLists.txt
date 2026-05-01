@@ -14,6 +14,7 @@ set(MX_Include_Dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/ThirdParty/FreeRTOS/portable/GCC/ARM_CM3
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/CMSIS
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Config
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Inc
 )
 
 # STM32CubeMX generated application sources
@@ -21,6 +22,9 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/sysmem.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/syscalls.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/flash.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/rcc.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/gpio.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Startup/startup_stm32f103xb.s
 )
 
