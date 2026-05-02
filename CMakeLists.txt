@@ -43,16 +43,15 @@ add_subdirectory(cmake/stm32cubemx)
 # )
 
 # Add sources to executable
-# target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-#     Core/Src/handler.c
-#     Core/Src/hd44780.c
-#     Core/Src/sht11.c
-# )
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+    Component/Src/hd44780.c
+    Component/Src/sht11.c
+)
 
 # Add include paths
-# target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-#     # Add user defined include paths
-# )
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    Component/Inc
+)
 
 # # Add project symbols (macros)
 # target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
