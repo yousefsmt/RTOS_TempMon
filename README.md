@@ -1,34 +1,26 @@
-# STM32F103 Bare-Metal Temperature and Humidity Monitoring
+# STM32F103 FreeRTOS Temperature and Humidity Monitoring
 
 ## Overview
 
-This project implements a bare-metal temperature and humidity monitoring system using the STM32F103C8T6 microcontroller. It interfaces with an SHT11 sensor for data acquisition and displays the results on an HD44780-compatible 16×2 LCD.
+This project is a simple temperature and humidity monitoring system built on the **STM32F103C8T6 (Blue Pill)** using **FreeRTOS** and **CMSIS**.
 
-The implementation is based entirely on CMSIS, with direct register-level control and no dependency on vendor HAL libraries.
+It reads environmental data from the **SHT11** temperature and humidity sensor and displays the measured values on a **16x2 LCD** driven by the **HD44780** controller.
 
----
+The main purpose of this project is to provide a practical and easy-to-understand example of how to build a small embedded application using **FreeRTOS** on STM32. It is designed as a learning-oriented project that demonstrates the fundamentals of:
 
-## Features
+* Task creation and scheduling with FreeRTOS
+* Sensor interfacing with the SHT11
+* LCD communication using the HD44780 driver
+* Basic embedded software structure using CMSIS
+* Modular and maintainable firmware design
 
-- Bare-metal firmware using CMSIS (no HAL)
-- SHT11 temperature and humidity sensor driver
-- HD44780 16×2 LCD driver
-- Support for 4-bit and 8-bit LCD interface modes
-- Precise timing using SysTick (microsecond and millisecond delays)
-- Low-level GPIO control for full hardware transparency
+This first release focuses on establishing a clean and functional baseline implementation on the STM32F103 platform.
 
----
+Future releases will include:
 
-## Hardware Requirements
+* Improved debugging workflow
+* Better software architecture and code refinement
+* Additional monitoring and diagnostic features
+* Enhanced reliability and system observability
 
-- STM32F103C8T6 (Blue Pill or equivalent)
-- SHT11 temperature and humidity sensor
-- 16×2 LCD (HD44780-compatible)
-- Basic supporting components (resistors, wiring, power supply)
-
----
-
-## Project Status
-
-This project is currently under active development.  
-The first release version **v0.1.0** is in progress.
+This repository is intended for learning, experimentation, and as a reference for developers getting started with **STM32**, **FreeRTOS**, and basic embedded system design.
