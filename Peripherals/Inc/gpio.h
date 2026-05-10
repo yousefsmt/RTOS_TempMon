@@ -1,5 +1,5 @@
-#ifndef __GPIO_H
-#define __GPIO_H
+#ifndef PERIPHERALS_GPIO_H_
+#define PERIPHERALS_GPIO_H_
 
 #include "mcu.h"
 
@@ -12,4 +12,4 @@
  */
 void GPIO_Init( void );
 
-#endif /* __GPIO_H */
+#endif /* PERIPHERALS_GPIO_H_ */

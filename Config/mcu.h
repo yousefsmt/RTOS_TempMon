@@ -1,5 +1,5 @@
-#ifndef __MCU_H
-#define __MCU_H
+#ifndef CONFIG_MCU_H_
+#define CONFIG_MCU_H_
 
 #include "stm32f1xx.h"
 
@@ -7,4 +7,4 @@
 #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#endif /* __MCU_H */
+#endif /* CONFIG_MCU_H_ */

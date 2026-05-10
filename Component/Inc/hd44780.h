@@ -1,5 +1,5 @@
-#ifndef HD44780_H
-#define HD44780_H
+#ifndef COMPONENET_HD44780_H_
+#define COMPONENET_HD44780_H_
 
 #include "mcu.h"
 
@@ -147,4 +147,4 @@ void LCD_PrintString(char *data);
  */
 void LCD_Init(void);
 
-#endif /* HD44780_H */
+#endif /* COMPONENET_HD44780_H_ */

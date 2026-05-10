@@ -1,16 +1,7 @@
+#include "FreeRTOSTasks.h"
 #include "sht11.h"
 
-void SHT11_Init()
-{
-    SHT11_DATA_RESET_PIN();
-    SHT11_SCK_RESET_PIN();
-
-    SHT11_DATA_OUT();
-    SHT11_SCK_OUT();
-
-    // LCD_ExecuteCommand(CLEAN_DISPLAY);
-    // LCD_PrintString("init SHT11");
-}
+static const TickType_t xDelay1ms = pdMS_TO_TICKS(1);
 
 void SHT11_StartTransmission(void)
 {
@@ -18,25 +9,25 @@ void SHT11_StartTransmission(void)
 
     SHT11_DATA_HIGH();
     SHT11_SCK_LOW();
-    // // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 
     SHT11_SCK_HIGH();
-    // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 
     SHT11_DATA_LOW();
-    // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 
     SHT11_SCK_LOW();
-    // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 
     SHT11_SCK_HIGH();
-    // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 
     SHT11_DATA_HIGH();
-    // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 
     SHT11_SCK_LOW();
-    // DelayMicroSecond(0x02U);
+	vTaskDelay( xDelay1ms );
 }
 
 static uint8_t SHT11_ReadByte(uint8_t ack)
@@ -50,12 +41,12 @@ static uint8_t SHT11_ReadByte(uint8_t ack)
         data <<= 1;
 
         SHT11_SCK_HIGH();
-        // DelayMicroSecond(2);
+		vTaskDelay( xDelay1ms );
 
         data |= SHT11_DATA_READ();
 
         SHT11_SCK_LOW();
-        // DelayMicroSecond(2);
+		vTaskDelay( xDelay1ms );
     }
 
     // ACK phase
@@ -66,12 +57,12 @@ static uint8_t SHT11_ReadByte(uint8_t ack)
     else
         SHT11_DATA_HIGH();
 
-    // DelayMicroSecond(2);
+	vTaskDelay( xDelay1ms );
 
     SHT11_SCK_HIGH();
-    // DelayMicroSecond(2);
+	vTaskDelay( xDelay1ms );
     SHT11_SCK_LOW();
-    // DelayMicroSecond(2);
+	vTaskDelay( xDelay1ms );
 
     SHT11_DATA_HIGH();   // release line
     SHT11_DataIn();
@@ -86,10 +77,14 @@ uint32_t SHT11_ReadData(void)
     SHT11_DataIn();
 
     while (SHT11_DATA_READ() && timeout--)
-        // DelayMicroSecond(1);
+	{
+		vTaskDelay( xDelay1ms );
+	}
 
     if (timeout == 0)
+	{
         return 0xFFFF;
+	}
 
     uint32_t msb = SHT11_ReadByte(SHT11_ACK);
     uint32_t lsb = SHT11_ReadByte(SHT11_NACK);
@@ -109,23 +104,23 @@ void SHT11_SendCommand(uint32_t cmd)
         else
             SHT11_DATA_LOW();
 
-        // DelayMicroSecond(2);
+		vTaskDelay( xDelay1ms );
 
         SHT11_SCK_HIGH();
-        // DelayMicroSecond(2);
+		vTaskDelay( xDelay1ms );
         SHT11_SCK_LOW();
-        // DelayMicroSecond(2);
+		vTaskDelay( xDelay1ms );
     }
 
     // Release DATA for ACK
     SHT11_DATA_HIGH();
     SHT11_DataIn();
 
-    // DelayMicroSecond(2);
+	vTaskDelay( xDelay1ms );
 
     // ACK clock
     SHT11_SCK_HIGH();
-    // DelayMicroSecond(2);
+	vTaskDelay( xDelay1ms );
 
     if ((SHT11_DATA_PIN->IDR & SHT11_DATA_BIT) == SHT11_NACK)
     {
@@ -134,7 +129,7 @@ void SHT11_SendCommand(uint32_t cmd)
     }
 
     SHT11_SCK_LOW();
-    // DelayMicroSecond(2);
+	vTaskDelay( xDelay1ms );
 }
 
 void SHT11_DataIn()

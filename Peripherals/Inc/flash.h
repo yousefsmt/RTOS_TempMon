@@ -1,5 +1,5 @@
-#ifndef __FLASH_H
-#define __FLASH_H
+#ifndef PERIPHERALS_FLASH_H_
+#define PERIPHERALS_FLASH_H_
 
 #include "mcu.h"
 
@@ -12,4 +12,4 @@
  */
 void FLASH_ConfigWaitState( uint32_t latency );
 
-#endif /* __FLASH_H */
+#endif /* PERIPHERALS_FLASH_H_ */

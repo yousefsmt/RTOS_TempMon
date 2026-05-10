@@ -4,13 +4,15 @@
 #include "rcc.h"
 #include "gpio.h"
 
-#define WAITE_STATE (0x00U) /* True latency for HSI (8MHz) SYSCLK clock */
+#include "sense.h"
 
-void StartTask( void *param );
+#define mainWAITE_STATE ( 0x00U ) /* True latency for HSI (8MHz) SYSCLK clock */
+
+void vStartupTask( void *pvParameters );
 
 int main( void )
 {
-	FLASH_ConfigWaitState( WAITE_STATE );
+	FLASH_ConfigWaitState( mainWAITE_STATE );
 
 	RCC_Init();
 
@@ -18,21 +20,32 @@ int main( void )
 
 	GPIO_Init();
 
-	( void )xTaskCreate(StartTask, "Task1", STARTUP_STACK_SIZE, NULL, STARTUP_STACK_PRIORITY, NULL);
+	/*---------------------------------------------------------------------------*/
+	BaseType_t xReturned;
+
+	xReturned = xTaskCreate( vStartupTask, "StartUp", STARTUP_STACK_SIZE, NULL, STARTUP_STACK_PRIORITY, NULL );
+	configASSERT ( xReturned == pdPASS );
+
+	/*---------------------------------------------------------------------------*/
+
+	vTaskStartScheduler();
+
+	for ( ;; )
 
 	return 0;
 }
 
-void StartTask( void *param )
+void vStartupTask( void *pvParameters )
 {
-	( void )param;
+	( void )pvParameters;
 
-	while (1)
-	{
-		GPIOB->BSRR |= GPIO_BSRR_BS15;
-		vTaskDelay(pdMS_TO_TICKS(500));
+	BaseType_t xReturned;
 
-		GPIOB->BRR |= GPIO_BRR_BR15;
-		vTaskDelay(pdMS_TO_TICKS(500));
-	}
+	xReturned = xTaskCreate( vSenseTemperature, "Temp", SENSE_TEMPERATURE_STACK_SIZE, NULL, SENSE_TEMPERATURE_STACK_PRIORITY, NULL );
+	configASSERT ( xReturned == pdPASS );
+
+	xReturned = xTaskCreate( vSenseHumidity, "Hum", SENSE_HUMIDITY_STACK_SIZE, NULL, SENSE_TEMPERATURE_STACK_PRIORITY, NULL );
+	configASSERT ( xReturned == pdPASS );
+
+	vTaskDelete( NULL );
 }

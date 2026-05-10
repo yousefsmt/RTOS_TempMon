@@ -46,11 +46,15 @@ add_subdirectory(cmake/stm32cubemx)
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Component/Src/hd44780.c
     Component/Src/sht11.c
+	Common/Src/error.c
+	ApplicationTasks/Src/sense.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     Component/Inc
+	Common/Inc
+	ApplicationTasks/Inc
 )
 
 # # Add project symbols (macros)

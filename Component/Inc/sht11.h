@@ -1,5 +1,5 @@
-#ifndef SHT11_H
-#define SHT11_H
+#ifndef COMPONENET_SHT11_H_
+#define COMPONENET_SHT11_H_
 
 #include "mcu.h"
 
@@ -34,15 +34,6 @@ typedef enum
     SHT11_ACK  = 0,
     SHT11_NACK = 1
 } SHT11_Ack_t;
-
-/**
- * @brief Initialize SHT11
- * @param none
- * @return none
- * 
- * Configures and sets up the SHT11 controller for operation.
- */
-void SHT11_Init();
 
 /**
  * @brief Send start transmission sequence to SHT11
@@ -89,4 +80,4 @@ void SHT11_DataOut();
  */
 uint32_t SHT11_ReadData(void);
 
-#endif /* SHT11_H */
+#endif /* COMPONENET_SHT11_H_ */

@@ -1,5 +1,5 @@
-#ifndef __RCC_H
-#define __RCC_H
+#ifndef PERIPHERALS_RCC_H_
+#define PERIPHERALS_RCC_H_
 
 #include "mcu.h"
 
@@ -12,4 +12,4 @@
  */
 void RCC_Init( void );
 
-#endif /* __RCC_H */
+#endif /* PERIPHERALS_RCC_H_ */
