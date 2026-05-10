@@ -53,9 +53,13 @@ static uint8_t SHT11_ReadByte(uint8_t ack)
     SHT11_DataOut();
 
     if (ack == SHT11_ACK)
+	{
         SHT11_DATA_LOW();
+	}
     else
+	{
         SHT11_DATA_HIGH();
+	}
 
 	vTaskDelay( xDelay1ms );
 
