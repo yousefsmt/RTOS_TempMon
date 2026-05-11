@@ -43,3 +43,8 @@ void vErrorHandlerSendTask( ErrorStatus_t error )
 {
 
 }
+
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char * pcTaskName )
+{
+
+}

@@ -12,7 +12,7 @@
 	#define LOG( msg... ) printf( msg );
 #else
 	#define LOG( msg... ) ;
-#endif // DEBUG
+#endif /* DEBUG */
 
 #define mainWAITE_STATE ( 0x00U ) /* True latency for HSI (8MHz) SYSCLK clock */
 
@@ -28,10 +28,16 @@ int main( void )
 
 	GPIO_Init();
 
+	#ifdef DEBUG
+		const uint32_t baud_rate = 115200U;
+		USART_Init( baud_rate );
+	#endif /* DEBUG */
+
+	LOG( "Peripherals Init" );
 	/*---------------------------------------------------------------------------*/
 	BaseType_t xReturned;
 
-	xReturned = xTaskCreate( vStartupTask, "StartUp", STARTUP_STACK_SIZE, NULL, STARTUP_STACK_PRIORITY, NULL );
+	xReturned = xTaskCreate( vStartupTask, "StartUp", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
 	configASSERT ( xReturned == pdPASS );
 
 	/*---------------------------------------------------------------------------*/
@@ -49,11 +55,10 @@ void vStartupTask( void *pvParameters )
 
 	BaseType_t xReturned;
 
-	xReturned = xTaskCreate( vSenseTemperature, "Temp", SENSE_TEMPERATURE_STACK_SIZE, NULL, SENSE_TEMPERATURE_STACK_PRIORITY, NULL );
+	xReturned = xTaskCreate( vSenseStartSensing, "Sense", tasksSENSE_START_STACK_SIZE, NULL, tasksSENSE_START_STACK_PRIORITY, NULL );
 	configASSERT ( xReturned == pdPASS );
 
-	xReturned = xTaskCreate( vSenseHumidity, "Hum", SENSE_HUMIDITY_STACK_SIZE, NULL, SENSE_HUMIDITY_STACK_PRIORITY, NULL );
-	configASSERT ( xReturned == pdPASS );
+	LOG( "StartUp Done" );
 
 	vTaskDelete( NULL );
 }

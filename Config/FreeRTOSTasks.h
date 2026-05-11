@@ -4,16 +4,22 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#define STARTUP_STACK_SIZE     ( 128 )
-#define STARTUP_STACK_PRIORITY (configMAX_PRIORITIES - 1 )
+#define tasksSTARTUP_STACK_SIZE               ( 128 )
+#define tasksSTARTUP_STACK_PRIORITY           (configMAX_PRIORITIES - 1 )
 
-#define ERROR_HANDLER_STACK_SIZE     ( 128 )
-#define ERROR_HANDLER_STACK_PRIORITY ( configMAX_PRIORITIES - 2 )
+#define tasksSENSE_START_STACK_SIZE           ( 128 )
+#define tasksSENSE_START_STACK_PRIORITY       (configMAX_PRIORITIES - 1 )
 
-#define SENSE_HUMIDITY_STACK_SIZE     ( 128 )
-#define SENSE_HUMIDITY_STACK_PRIORITY ( configMAX_PRIORITIES - 3 )
+#define tasksERROR_HANDLER_STACK_SIZE         ( 128 )
+#define tasksERROR_HANDLER_STACK_PRIORITY     ( configMAX_PRIORITIES - 2 )
 
-#define SENSE_TEMPERATURE_STACK_SIZE     ( 128 )
-#define SENSE_TEMPERATURE_STACK_PRIORITY ( configMAX_PRIORITIES - 3 )
+#define tasksSENSE_HUMIDITY_STACK_SIZE        ( 128 )
+#define tasksSENSE_HUMIDITY_STACK_PRIORITY    ( configMAX_PRIORITIES - 3 )
+
+#define tasksSENSE_TEMPERATURE_STACK_SIZE     ( 128 )
+#define tasksSENSE_TEMPERATURE_STACK_PRIORITY ( configMAX_PRIORITIES - 3 )
+
+#define tasksSENSE_LCD_STACK_SIZE             ( 128 )
+#define tasksSENSE_LCD_STACK_PRIORITY         ( configMAX_PRIORITIES - 4 )
 
 #endif /* FREERTOS_TASKS_H */
