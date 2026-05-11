@@ -30,3 +30,4 @@ void RCC_Init( void )
 					RCC_CFGR_PLLXTPRE | RCC_CFGR_PLLSRC | RCC_CFGR_ADCPRE |
 					RCC_CFGR_PPRE2 | RCC_CFGR_PPRE1 | RCC_CFGR_HPRE );
 }
+/*--------------------------------------------------------------------------------------------*/

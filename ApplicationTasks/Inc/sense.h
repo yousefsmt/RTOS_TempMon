@@ -13,8 +13,7 @@ typedef struct
 	float humidity;
 }SenseMeas_t;
 
-void vSenseHumidity( void *pvParameters );
-void vSenseTemperature( void *pvParameters );
+void vSenseMeasurement( void *pvParameters );
 void vSenseLCDShow( void *pvParameters );
 void vSenseStartSensing( void *pvParameters );
 

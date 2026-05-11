@@ -8,15 +8,12 @@
 
 #ifdef DEBUG
 	#include "usart.h"
-	extern int printf(const char *format, ...);
-	#define LOG( msg... ) printf( msg );
-#else
-	#define LOG( msg... ) ;
 #endif /* DEBUG */
 
 #define mainWAITE_STATE ( 0x00U ) /* True latency for HSI (8MHz) SYSCLK clock */
 
 void vStartupTask( void *pvParameters );
+
 /*---------------------------------------------------------------------------*/
 int main( void )
 {
@@ -33,14 +30,11 @@ int main( void )
 		USART_Init( baud_rate );
 	#endif /* DEBUG */
 
-	LOG( "Peripherals Init" );
-	/*---------------------------------------------------------------------------*/
+	LOG( "Peripherals Init\n\r" );
 	BaseType_t xReturned;
 
 	xReturned = xTaskCreate( vStartupTask, "StartUp", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
 	configASSERT ( xReturned == pdPASS );
-
-	/*---------------------------------------------------------------------------*/
 
 	vTaskStartScheduler();
 
@@ -48,6 +42,7 @@ int main( void )
 
 	return 0;
 }
+
 /*---------------------------------------------------------------------------*/
 void vStartupTask( void *pvParameters )
 {
@@ -55,10 +50,11 @@ void vStartupTask( void *pvParameters )
 
 	BaseType_t xReturned;
 
-	xReturned = xTaskCreate( vSenseStartSensing, "Sense", tasksSENSE_START_STACK_SIZE, NULL, tasksSENSE_START_STACK_PRIORITY, NULL );
+	xReturned = xTaskCreate( vSenseStartSensing, "Sense", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
 	configASSERT ( xReturned == pdPASS );
 
-	LOG( "StartUp Done" );
+	LOG( "StartUpDone\n\r" );
 
 	vTaskDelete( NULL );
 }
+/*--------------------------------------------------------------------------------------------*/

@@ -1,36 +1,35 @@
 #include "FreeRTOSTasks.h"
 #include "sht11.h"
 
-static const TickType_t xDelay1ms = pdMS_TO_TICKS(1);
-
-void SHT11_StartTransmission(void)
+void SHT11_StartTransmission( void )
 {
     SHT11_DataOut();    
 
     SHT11_DATA_HIGH();
     SHT11_SCK_LOW();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_SCK_HIGH();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_DATA_LOW();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_SCK_LOW();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_SCK_HIGH();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_DATA_HIGH();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_SCK_LOW();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 }
+/*--------------------------------------------------------------------------------------------*/
 
-static uint8_t SHT11_ReadByte(uint8_t ack)
+static uint8_t SHT11_ReadByte( uint8_t ack )
 {
     uint8_t data = 0;
 
@@ -41,12 +40,12 @@ static uint8_t SHT11_ReadByte(uint8_t ack)
         data <<= 1;
 
         SHT11_SCK_HIGH();
-		vTaskDelay( xDelay1ms );
+		vTaskDelay( pdMS_TO_TICKS(1) );
 
         data |= SHT11_DATA_READ();
 
         SHT11_SCK_LOW();
-		vTaskDelay( xDelay1ms );
+		vTaskDelay( pdMS_TO_TICKS(1) );
     }
 
     // ACK phase
@@ -61,20 +60,21 @@ static uint8_t SHT11_ReadByte(uint8_t ack)
         SHT11_DATA_HIGH();
 	}
 
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_SCK_HIGH();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
     SHT11_SCK_LOW();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     SHT11_DATA_HIGH();   // release line
     SHT11_DataIn();
 
     return data;
 }
+/*--------------------------------------------------------------------------------------------*/
 
-uint32_t SHT11_ReadData(void)
+uint32_t SHT11_ReadData( void )
 {
     uint32_t timeout = 250000; // ~250ms
 
@@ -82,10 +82,10 @@ uint32_t SHT11_ReadData(void)
 
     while (SHT11_DATA_READ() && timeout--)
 	{
-		vTaskDelay( xDelay1ms );
+		vTaskDelay( pdMS_TO_TICKS(1) );
 	}
 
-    if (timeout == 0)
+    if (timeout == 0x00)
 	{
         return 0xFFFF;
 	}
@@ -95,8 +95,9 @@ uint32_t SHT11_ReadData(void)
 
     return (msb << 8) | lsb;
 }
+/*--------------------------------------------------------------------------------------------*/
 
-void SHT11_SendCommand(uint32_t cmd)
+void SHT11_SendCommand( uint32_t cmd )
 {
     SHT11_StartTransmission();
     SHT11_DataOut();
@@ -104,46 +105,52 @@ void SHT11_SendCommand(uint32_t cmd)
     for (int idx = 7; idx >= 0; idx--)
     {
         if (cmd & (1U << idx))
+		{
             SHT11_DATA_HIGH();
+		}
         else
-            SHT11_DATA_LOW();
+		{
+			SHT11_DATA_LOW();
+		}
 
-		vTaskDelay( xDelay1ms );
+		vTaskDelay( pdMS_TO_TICKS(1) );
 
         SHT11_SCK_HIGH();
-		vTaskDelay( xDelay1ms );
+		vTaskDelay( pdMS_TO_TICKS(1) );
         SHT11_SCK_LOW();
-		vTaskDelay( xDelay1ms );
+		vTaskDelay( pdMS_TO_TICKS(1) );
     }
 
     // Release DATA for ACK
     SHT11_DATA_HIGH();
     SHT11_DataIn();
 
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     // ACK clock
     SHT11_SCK_HIGH();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 
     if ((SHT11_DATA_PIN->IDR & SHT11_DATA_BIT) == SHT11_NACK)
     {
-        // LCD_ExecuteCommand(CLEAN_DISPLAY);
-        // LCD_PrintString("error cmd");
+		LOG( "SHT11error\n\r" );
     }
 
     SHT11_SCK_LOW();
-	vTaskDelay( xDelay1ms );
+	vTaskDelay( pdMS_TO_TICKS(1) );
 }
+/*--------------------------------------------------------------------------------------------*/
 
 void SHT11_DataIn()
 {
     SHT11_DATA_RESET_PIN();
     SHT11_DATA_IN();
 }
+/*--------------------------------------------------------------------------------------------*/
 
 void SHT11_DataOut()
 {
     SHT11_DATA_RESET_PIN();
     SHT11_DATA_OUT();
 }
+/*--------------------------------------------------------------------------------------------*/

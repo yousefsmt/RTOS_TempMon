@@ -14,3 +14,4 @@ void FLASH_ConfigWaitState( uint32_t wait_state )
 	FLASH->ACR |= FLASH_ACR_PRFTBE;
 	FLASH->ACR |= ( wait_state << FLASH_ACR_LATENCY_Pos );
 }
+/*--------------------------------------------------------------------------------------------*/

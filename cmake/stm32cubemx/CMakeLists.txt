@@ -25,8 +25,8 @@ set(MX_Application_Src
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/flash.c
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/rcc.c
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/gpio.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/printf-stdarg.c
 	$<$<CONFIG:Debug>:${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/usart.c>
-	$<$<CONFIG:Debug>:${CMAKE_CURRENT_SOURCE_DIR}/../../Peripherals/Src/printf-stdarg.c>
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Startup/startup_stm32f103xb.s
 )
 
