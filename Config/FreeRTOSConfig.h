@@ -142,10 +142,12 @@ standard names. */
 /* USER CODE BEGIN Defines */
 /* Enable some debug features. */
 #ifdef DEBUG
+	#define configCHECK_HANDLER_INSTALLATION        1
 	#define configCHECK_FOR_STACK_OVERFLOW          2
 	#define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );}
 #else
 	#define configCHECK_FOR_STACK_OVERFLOW          0
+	#define configCHECK_HANDLER_INSTALLATION        0
 #endif
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 /* USER CODE END Defines */

@@ -28,13 +28,14 @@ int main( void )
 	#ifdef DEBUG
 		const uint32_t baud_rate = 115200U;
 		USART_Init( baud_rate );
+		LOG( "Peripherals Init\n\r" );
+		BaseType_t xReturned;
+	
+		xReturned = xTaskCreate( vStartupTask, "StartUp", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
+		configASSERT ( xReturned == pdPASS );
+	#else
+		( void )xTaskCreate( vStartupTask, "StartUp", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
 	#endif /* DEBUG */
-
-	LOG( "Peripherals Init\n\r" );
-	BaseType_t xReturned;
-
-	xReturned = xTaskCreate( vStartupTask, "StartUp", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
-	configASSERT ( xReturned == pdPASS );
 
 	vTaskStartScheduler();
 
@@ -48,10 +49,14 @@ void vStartupTask( void *pvParameters )
 {
 	( void )pvParameters;
 
-	BaseType_t xReturned;
+	#ifdef DEBUG
+		BaseType_t xReturned;
 
-	xReturned = xTaskCreate( vSenseStartSensing, "Sense", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
-	configASSERT ( xReturned == pdPASS );
+		xReturned = xTaskCreate( vSenseStartSensing, "Sense", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
+		configASSERT ( xReturned == pdPASS );
+	#else
+		( void )xTaskCreate( vSenseStartSensing, "Sense", tasksSTARTUP_STACK_SIZE, NULL, tasksSTARTUP_STACK_PRIORITY, NULL );
+	#endif /* DEBUG */
 
 	LOG( "StartUpDone\n\r" );
 

@@ -110,13 +110,18 @@ void vSenseStartSensing( void *pvParameters )
 	LCD_ExecuteCommand(LCD_2ND_LINE + 0x01U);
 	LCD_PrintString("Humidity: ");
 
-	BaseType_t xReturned;
+	#ifdef DEBUG
+		BaseType_t xReturned;
 
-	xReturned = xTaskCreate( vSenseMeasurement, "Hum", tasksSENSE_MEASURE_STACK_SIZE, NULL, tasksSENSE_MEASURE_STACK_PRIORITY, NULL );
-	configASSERT ( xReturned == pdPASS );
+		xReturned = xTaskCreate( vSenseMeasurement, "Hum", tasksSENSE_MEASURE_STACK_SIZE, NULL, tasksSENSE_MEASURE_STACK_PRIORITY, NULL );
+		configASSERT ( xReturned == pdPASS );
 
-	xReturned = xTaskCreate( vSenseLCDShow, "LCD", tasksSENSE_LCD_STACK_SIZE, NULL, tasksSENSE_LCD_STACK_PRIORITY, NULL );
-	configASSERT ( xReturned == pdPASS );
+		xReturned = xTaskCreate( vSenseLCDShow, "LCD", tasksSENSE_LCD_STACK_SIZE, NULL, tasksSENSE_LCD_STACK_PRIORITY, NULL );
+		configASSERT ( xReturned == pdPASS );
+	#else
+		( void )xTaskCreate( vSenseMeasurement, "Hum", tasksSENSE_MEASURE_STACK_SIZE, NULL, tasksSENSE_MEASURE_STACK_PRIORITY, NULL );
+		( void )xTaskCreate( vSenseLCDShow, "LCD", tasksSENSE_LCD_STACK_SIZE, NULL, tasksSENSE_LCD_STACK_PRIORITY, NULL );
+	#endif /* DEBUG */
 
 	vTaskDelete( NULL );
 }
